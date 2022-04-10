@@ -2,6 +2,8 @@ package violetlog
 
 import (
 	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
 
 	"gopkg.in/h2non/gentleman.v2/plugins/body"
@@ -22,6 +24,17 @@ func (v VioletLog) Custom(level, message, stackTrace string) (Log, error) {
 	response, err := request.Send()
 	if err != nil {
 		return Log{}, err
+	}
+
+	if response.StatusCode != http.StatusCreated {
+		if response.StatusCode == http.StatusUnprocessableEntity {
+			return Log{}, errors.New("VioletLog: Unprocessable Entity")
+		}
+		if response.StatusCode == http.StatusUnauthorized {
+			return Log{}, errors.New("VioletLog: Unauthorized")
+		}
+
+		return Log{}, errors.New(fmt.Sprintf("VioletLog: %d", response.StatusCode))
 	}
 
 	log := Log{}
