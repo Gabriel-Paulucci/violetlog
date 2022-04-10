@@ -33,3 +33,27 @@ func (v VioletLog) Custom(level, message, stackTrace string) (Log, error) {
 
 	return log, nil
 }
+
+func (v VioletLog) Several(message, stackTrace string) (Log, error) {
+	return v.Custom("several", message, stackTrace)
+}
+
+func (v VioletLog) Error(message, stackTrace string) (Log, error) {
+	return v.Custom("error", message, stackTrace)
+}
+
+func (v VioletLog) Warning(message, stackTrace string) (Log, error) {
+	return v.Custom("warning", message, stackTrace)
+}
+
+func (v VioletLog) Info(message, stackTrace string) (Log, error) {
+	return v.Custom("info", message, stackTrace)
+}
+
+func (v VioletLog) Debug(message, stackTrace string) (Log, error) {
+	return v.Custom("debug", message, stackTrace)
+}
+
+func (v VioletLog) Verbose(message, stackTrace string) (Log, error) {
+	return v.Custom("verbose", message, stackTrace)
+}
